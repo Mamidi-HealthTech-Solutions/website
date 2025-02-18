@@ -9,6 +9,13 @@ body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     padding-top: 76px;
     overflow-x: hidden;
+    background-color: #f8f9fa;
+    background-image: 
+        radial-gradient(#e9ecef 1px, transparent 1px),
+        radial-gradient(#e9ecef 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    position: relative;
 }
 
 /* Navbar Styles */
@@ -16,7 +23,7 @@ body {
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
 }
 
 .navbar-brand {
@@ -25,11 +32,10 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('../images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 80vh;
     position: relative;
+    min-height: 100vh;
+    padding: 120px 0;
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
     overflow: hidden;
 }
 
@@ -40,8 +46,14 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 204, 255, 0.1));
-    z-index: 0;
+    background-image: 
+        linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    opacity: 0.3;
 }
 
 .hero-section .container {
@@ -71,16 +83,14 @@ body {
 /* Feature Cards */
 .feature-card {
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    transition: all 0.3s ease;
+    border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -132,17 +142,14 @@ body {
 
 /* Services Section */
 .service-card {
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .service-card:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -154,6 +161,11 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
+
+.contact-form .card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
 }
 
 .form-control {
@@ -195,15 +207,9 @@ body {
 }
 
 @keyframes floating {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
 }
 
 /* Responsive Adjustments */
@@ -215,4 +221,25 @@ body {
     .display-4 {
         font-size: 2.5rem;
     }
+}
+
+/* Sections */
+section {
+    position: relative;
+    padding: 80px 0;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Footer */
+.footer {
+    background: #212529;
+    position: relative;
+}
+
+/* Thank you page */
+.thank-you-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

@@ -226,7 +226,7 @@ Please do not answer anything that is not related to the above services.
             return "You're welcome! Is there anything else I can help you with?";
         }
         else {
-            return "I'm not sure I understand. Could you rephrase your question? Or you can check our FAQ section for more information.";
+            return "I'm not sure I understand. Could you rephrase your question? Or contact us at info@mamidi.co.in or reach out to 9293725736.";
         }
     }
 });

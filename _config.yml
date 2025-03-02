@@ -1,0 +1,7 @@
+# Site settings
+title: Mamidi Health Tech
+# ... other Jekyll configuration ...
+
+# GitHub secrets for the site
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

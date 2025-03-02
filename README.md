@@ -32,12 +32,7 @@ The GitHub Actions workflow will automatically inject your API key during the bu
 
 ### How the Build Process Works
 
-The GitHub Actions workflow uses two methods to ensure the API key is properly injected:
-
-1. **Pre-build Method**: Creates an `env-config.js` file before Jekyll builds the site, which gets copied to the `_site` directory during the build.
-2. **Post-build Method**: Attempts to inject the API key into the `_site` directory after Jekyll builds the site (as a backup).
-
-This dual approach ensures that the API key is available even if one method fails.
+The GitHub Actions workflow creates an `env-config.js` file with your API key before Jekyll builds the site. This file is then included in the build and copied to the final site, making the API key available to the chatbot.
 
 ## How It Works
 

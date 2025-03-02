@@ -33,14 +33,6 @@ jobs:
         with:
           source: .
           destination: ./_site
-          
-      - name: Fix permissions and try inject script (backup method)
-        run: |
-          mkdir -p _site/js
-          chmod -R 755 _site
-          node scripts/inject-env.js || echo "Using pre-built env-config.js instead"
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

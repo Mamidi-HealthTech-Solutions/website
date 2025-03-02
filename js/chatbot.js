@@ -61,13 +61,74 @@ document.addEventListener('DOMContentLoaded', function() {
         const chatMessages = document.getElementById('chat-messages');
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', sender + '-message');
-        messageElement.innerHTML = `
-            <div class="message-bubble">
-                ${message}
-            </div>
-        `;
+        
+        // Parse markdown for bot messages
+        if (sender === 'bot') {
+            messageElement.innerHTML = `
+                <div class="message-bubble markdown-content">
+                    ${parseMarkdown(message)}
+                </div>
+            `;
+        } else {
+            messageElement.innerHTML = `
+                <div class="message-bubble">
+                    ${message}
+                </div>
+            `;
+        }
+        
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Function to parse markdown text to HTML
+    function parseMarkdown(text) {
+        // Handle headers
+        text = text.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+        text = text.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+        text = text.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+        
+        // Handle bold text
+        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        
+        // Handle italic text
+        text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        
+        // Handle links
+        text = text.replace(/\[([^\[]+)\]\(([^\)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+        
+        // Handle bullet lists
+        text = text.replace(/^\* (.*$)/gm, '<li>$1</li>');
+        text = text.replace(/<li>(.*)<\/li>/gm, function(match) {
+            if (match.startsWith('<li>')) {
+                return '<ul>' + match + '</ul>';
+            }
+            return match;
+        });
+        
+        // Handle numbered lists
+        text = text.replace(/^\d+\. (.*$)/gm, '<li>$1</li>');
+        text = text.replace(/<li>(.*)<\/li>/gm, function(match, p1) {
+            if (match.startsWith('<li>') && match.match(/\d+\./)) {
+                return '<ol>' + match + '</ol>';
+            }
+            return match;
+        });
+        
+        // Handle paragraphs
+        text = text.replace(/^(?!<[h|ul|ol|li])(.*$)/gm, '<p>$1</p>');
+        
+        // Fix any duplicated list wrapper tags
+        text = text.replace(/<\/ul>\s*<ul>/g, '');
+        text = text.replace(/<\/ol>\s*<ol>/g, '');
+        
+        // Handle code blocks
+        text = text.replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>');
+        
+        // Handle inline code
+        text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+        
+        return text;
     }
     
     // Function to show loading indicator

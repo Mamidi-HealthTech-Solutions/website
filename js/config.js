@@ -1,27 +1,18 @@
 // Configuration for API access
 const CONFIG = {
-    // In production, this will be injected during build by Jekyll
-    GEMINI_API_KEY: process.env.GEMINI_API_KEY || '{{ site.env.GEMINI_API_KEY }}',
+    // API key will be injected during build or loaded from env-config.js
+    GEMINI_API_KEY: window.ENV?.GEMINI_API_KEY || '',
     GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
 };
 
-// For local development with a .env file, uncomment and use this code
-// (This won't work in production, only for local testing)
-/*
-if (CONFIG.GEMINI_API_KEY.includes('{{')) {
-    // If running locally and using a .env.js file (which you'd need to create)
-    try {
-        if (typeof loadEnv !== 'undefined') {
-            const env = loadEnv();
-            CONFIG.GEMINI_API_KEY = env.GEMINI_API_KEY;
-        }
-    } catch (e) {
-        console.error('Error loading environment variables:', e);
-    }
-}
-*/
-
 // Validate the API key
-if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY.includes('{{')) {
+if (!CONFIG.GEMINI_API_KEY) {
     console.error('Error: GEMINI_API_KEY is not properly configured');
+    // Display a more visible error in the console
+    console.log('%c API KEY MISSING! ', 'background: #ff0000; color: white; font-size: 16px;');
+    console.log('Please make sure you have:');
+    console.log('1. Added your API key to js/env-config.js for local development');
+    console.log('2. Added your API key to GitHub Secrets for deployment');
+} else {
+    console.log('%c API KEY LOADED SUCCESSFULLY! ', 'background: #00ff00; color: black; font-size: 16px;');
 }

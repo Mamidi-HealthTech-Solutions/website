@@ -161,6 +161,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to get response from Gemini API
     async function getGeminiResponse(message) {
         try {
+            // Check if API key is available
+            if (!CONFIG.GEMINI_API_KEY) {
+                console.error('API key is missing');
+                return "I'm sorry, but I'm unable to process your request right now due to a configuration issue. Please try again later or contact support.";
+            }
+            
             const apiUrl = `${CONFIG.GEMINI_API_URL}?key=${CONFIG.GEMINI_API_KEY}`;
             
             const response = await fetch(apiUrl, {
@@ -195,14 +201,21 @@ Please do not answer anything that is not related to the above services.
             });
             
             if (!response.ok) {
+                const errorData = await response.text();
+                console.error(`API request failed with status ${response.status}:`, errorData);
                 throw new Error(`API request failed with status ${response.status}`);
             }
             
             const data = await response.json();
+            if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0]) {
+                console.error('Unexpected API response format:', data);
+                throw new Error('Unexpected API response format');
+            }
+            
             return data.candidates[0].content.parts[0].text;
         } catch (error) {
             console.error('Gemini API Error:', error);
-            throw error;
+            return "I'm sorry, but I encountered an error while processing your request. Please try again later.";
         }
     }
     

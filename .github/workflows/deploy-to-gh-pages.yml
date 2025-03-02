@@ -20,6 +20,16 @@ jobs:
         with:
           source: .
           destination: ./_site
+          
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Inject environment variables
+        run: node scripts/inject-env.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

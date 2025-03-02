@@ -15,19 +15,30 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Create pre-built env-config.js
+        run: node scripts/build-env-config.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          
+      - name: Rename env-config.build.js to env-config.js
+        run: mv js/env-config.build.js js/env-config.js
+
       - name: Set up Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: .
           destination: ./_site
           
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          
-      - name: Inject environment variables
-        run: node scripts/inject-env.js
+      - name: Fix permissions and try inject script (backup method)
+        run: |
+          mkdir -p _site/js
+          chmod -R 755 _site
+          node scripts/inject-env.js || echo "Using pre-built env-config.js instead"
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 

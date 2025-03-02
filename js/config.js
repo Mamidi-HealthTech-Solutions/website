@@ -1,7 +1,7 @@
 // Configuration for API access
 const CONFIG = {
     // API key will be injected during build or loaded from env-config.js
-    GEMINI_API_KEY: window.ENV?.GEMINI_API_KEY || '',
+    GEMINI_API_KEY: window.ENV?.GEMINI_API_KEY || process.env.GEMINI_API_KEY || envVars.GEMINI_API_KEY || '',
     GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
 };
 
